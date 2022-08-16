@@ -18,5 +18,27 @@ Odoo es un conjunto de aplicaciones de código abierto que cubren todas las nece
 --- /l (ver bases de datos)
 -- env (ver variables de entorno)
 - oc apply -f servicio_postgres.yaml
+- oc svc describe postgres-svc
+- oc apply -f odoo.yaml
+- oc logs pod-oddo
+- crear el servicio y el route
+- oc apply -f servicio-odoo
+- oc expose svc odoo-svc 
 
+configMap:
 
+- contener las variables dentro de un fichero de propiedades ficheros .properties
+- cargarlas en un configMap
+- oc create configmap postgres-cm --from-env-file postgres.properties
+- oc describe cm postgres-cm
+- oc apply -f dep_postgres.yaml
+- oc create configmap odoo-cm --from-env-file odoo.properties
+- oc apply -f odoo.yaml
+- oc apply -f servicio-odoo
+- oc expose svc odoo-svc
+
+secrets: el mejor por estar cifrado el contenido 
+
+- configmap cifrado en base 64
+- oc apply -f secreto1.yaml
+- oc describe secret secreto1

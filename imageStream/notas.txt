@@ -1,0 +1,9 @@
+ImageStream: IS
+
+IS o image Stream son imagenes docker o de repositorio git 
+
+- segun sea de codigo fuente, manual o de docker  
+(mas info en notas sobre despligue)
+
+
+

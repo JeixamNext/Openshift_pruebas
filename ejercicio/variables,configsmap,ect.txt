@@ -7,3 +7,16 @@
 - oc set env dc/nombre_dc --list
 - oc set env dc/ejemplo-variables RESPONSABLE=Magneto
 - oc set env dc/ejemplo-variables --overwrite RESPONSABLE=Luna
+
+configMap:
+
+- oc create configmap cf1 --from-literal=usuario=usu1 --from-literal=pass=123
+- oc get cm
+- get cm cf1 -o yaml (ver su yaml)
+- oc apply -f dc_variables.yaml
+
+secrets:
+
+- configmap cifrado.
+- oc create secret generic secret-configmap --from-literal=usuario=usu1 --from-literal=pass=123
+- oc apply -f dc_secret.yaml
