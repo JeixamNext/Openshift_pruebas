@@ -1,0 +1,167 @@
+- https://www.cncf.io/
+- https://www.cncf.io/certification/software-conformance/
+- https://www.okd.io/
+- https://github.com/openshift/okd/releases
+
+Openshift: Gestor o entorno que trabaja con cluster de kubernetes
+
+¿Que es?: Plataforma orientada al desarollo con caracteristicas Cloud computing desarollado por red hat
+
+- utiliza internamente docker y kubernetes
+
+- entornos,integracion continua
+
+- se puede interactuar con openShift con : aplicacion web,CLI,api REST
+
+- usa usa PaaS
+
+ventajas:
+
+- despliege de app con source to image (S2I): simplifica el ciclo de implementacion de aplicaciones
+- Se guarda en repositorios
+
+mas: distribuciones openShift
+
+- OKD (community)
+- openshift 3: https://github.com/minishift/minishift/releases
+- https://www.okd.io/installation/
+- RedHat openshift 4 (CRC)
+- https://github.com/code-ready/crc
+- https://www.redhat.com/es/technologies/cloud-computing/openshift#product-grid
+
+Openshift 3/4:
+
+- https://www.okd.io/installation/
+- https://docs.okd.io/4.9/welcome/index.html
+
+que es OKD: 
+
+OKD es una distribución de Kubernetes optimizada 
+para el desarrollo continuo de aplicaciones y la 
+implementación de múltiples inquilinos. OKD incorpora Kubernetes y 
+lo amplía con seguridad y otros conceptos integrados. 
+OKD agrega herramientas centradas en operaciones y desarrolladores 
+además de Kubernetes para permitir el desarrollo 
+rápido de aplicaciones, la implementación y el escalado fáciles, y el
+mantenimiento del ciclo de vida a largo plazo para equipos 
+pequeños y grandes.
+OKD es una distribución de Kubernetes hermana de Red Hat OpenShift.
+Si busca soporte de nivel empresarial o información sobre 
+la certificación de socios, Red Hat también ofrece 
+Red Hat OpenShift Container Platform CRC.
+#######################################################################################################################################################################################3
+
+Minishift: 
+- Red hat o fedora: 
+- tar cvf minishift.tgz 
+
+# poner el binario en un $path
+#####
+en home del usuario editar .bashrc o .bash_profile
+export PATH=$PATH:/home/user/minishift-linux.x64 (donde este alojado)(la carpeta donce esta minishift)
+
+o en windows: panel de control/sistema/editar variables de entorno/PATH/nuevo
+c:/Ruta
+#####
+
+- ./minishift config set vm-driver virtualbox (indica que se usara virtualbox)
+- ./minishift version
+- ./minishift status (muestra el cluster)
+- ./minishift start (creara la maquina virtual)
+# la url para acceder a la consola es importante 
+# oc es para openshift lo que kubectl es para kubernetes
+- oc para los comandos y web consola en modo grafico 
+
+####################################################################################################################################################################################################################################################333
+
+Openshift 4  codeReady Container (CRC):
+
+# Esta enfocada en un entorno educacional y se reseta al mes, a de usarse en redhat o fedora (8 gigas ram 4 CPUs)
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_local/2.5/html/getting_started_guide/installation_gsg#minimum-system-requirements_gsg
+- https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/
+- yum install libvirt / yum install NetworkManager
+
+# poner el binario en un $path
+
+#####
+en home editar .bashrc o .profile
+export PATH=$PATH:/home/user/crc
+#####
+
+# no se puede ejecutar como root, crear un usuario
+
+#####
+CRC no admite la virtualizacion anidada
+#####
+
+- su - root 
+- cd etc
+- nano sudoers
+- ./crc setup (crea el cluster)
+- sudo systemctl enable --now libvirtd
+- ./crc start (inicia la maquina)
+# pedira la clave pull secret
+- ./crc status
+# crea un directorio .crc en var
+- oc para los comandos y web consola en modo grafico
+- al terminar crc status dara url usuarios/contraseña de acceso al cluster
+
+Configurar el cliente OC
+
+- .crc/bin/oc
+- crc oc -env: configura la variable PATH
+# minishift oc-env ($Env:PATH =.... crear la variable)
+- eval $(crc oc(env)): configura 
+- oc version
+- oc login -u developer -p developer https://api.crc.testing:6443
+- oc status
+- crc ip 
+- oc get nodes (user admin)
+- crc console --credentials (muestra users y contraseñas)
+- crc console (consola web)
+
+Objetos kubernetes en openshift 
+
+- kebectl funciona
+- deployment
+	- oc apply -f deploy.yaml
+- services:
+	- oc apply -f servicio.yaml
+	- oc get svc 
+	- minishift ip (ip del cluster para acceder al puerto del svc)
+- pods:
+	- oc run --generation-pod/v1 nginx --image=nginx (declarativa)
+	- oc apply -f pod.yaml (como kubernetes funciona con imagenes docker hub ya creadas)
+	- oc get pod nginx -o yaml (muestra el componente en forma yaml)
+
+
+#######################################################################################################################################################################################################################
+ Los contenedores de openshift como seguridad no pueden realizar acciones de tipo root (como abrir puertos por ejemplo o postgres, redis, Apache, etc.)
+
+- configurar permisos: oc adm policy add-scc-to-user anyuid -z default
+
+#######################################################################################################################################################################################################################
+
+
+Despliegue de applicaciones en openshift:
+
+- Se puede hacer desde oc como desde el cliente web 
+- desplegar una app desde una imagen
+- S2I (desde git)(construir y desplegar)(imagen builder)
+
+#######################################################################################################################################################################################################################
+Desde la versión 4.5 de Openshift (que corresponde con CRC 1.13 o superior), el comando "new-app" ha cambiado y ahora genera un Deployment en vez de un DeploymentConfig.
+DeploymentConfig (DeploymentConfig es un recurso propio de Openshift, mientras que un Deployment es un recurso de Kubernetes)
+
+#######################################################################################################################################################################################################################
+
+
+- oc exec -it pod bash
+- oc edit: permite editar la configuracion del yaml en caliente
+- oc set env: permite editar variables 
+#######################################################################################################################################################################################################################
+
+oc rsh pod (permite hacer un ssh contra el pod para logearse, mejor que exec)
+
+#######################################################################################################################################################################################################################
+

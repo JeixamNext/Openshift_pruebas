@@ -1,0 +1,22 @@
+- https://hub.docker.com/_/odoo
+- https://hub.docker.com/_/postgres
+Odoo es un conjunto de aplicaciones de código abierto que cubren todas las necesidades de tu compañía: CRM, comercio electrónico, contabilidad, inventario,ect
+- https://www.odoo.com/es_ES
+
+######################################################################################################################################################################################################################################################################################################################################################
+
+- configurar variables de entorno (https://hub.docker.com/_/odoo)
+- configurar variables de entorno (https://hub.docker.com/_/postgres) 
+(usar mejor un configmap/secret para posgres y sus variables de entorno como contraseñas)
+
+- oc apply -f dep_postgres.yaml
+- oc get dc 
+- oc get rc 
+- oc get pod
+- oc rsh pod-xxx-xxx-xxx (entrar al contenedor)
+-- psql -U odoo postgres (entrar a la base de datos)
+--- /l (ver bases de datos)
+-- env (ver variables de entorno)
+- oc apply -f servicio_postgres.yaml
+
+

@@ -1,0 +1,9 @@
+- oc new-project pruebas-objetos
+- oc apply -f dc_variables.yaml
+- oc rsh pod (permite hacer un ssh contra el pod para logearse, mejor que exec)
+- env (ver variables de entorno )
+- oc edit dc ejemplo-variables
+- oc set env pod/nombre_pod --list 
+- oc set env dc/nombre_dc --list
+- oc set env dc/ejemplo-variables RESPONSABLE=Magneto
+- oc set env dc/ejemplo-variables --overwrite RESPONSABLE=Luna

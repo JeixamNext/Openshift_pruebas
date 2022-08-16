@@ -1,0 +1,40 @@
+- source: utiliza source-to-image para producier imagenes listas para ser ejecutadas
+- Docker: utiliza un docker build desde un dockerfile 
+- pipelines: usa jenkins y un flujo de trabajo definido en un jenkinfile, en la version 4(de openshift) se usa tekton
+- custom
+
+build:
+- oc new app apli1 --strategy=valor (Docker,source,custom)
+
+buildConfig:
+- usa YAML
+
+conceptos: S2I
+
+- Codigo fuente desde un repositorio: git,python,ruby,ect
+- image Builder: imagen preparada para fusionarse con el codigo fuente y generar una nueva imagen 
+- S2I: de codigo fuente a imagen (codigo fuente+image builder=buildconfig)
+- buildconfig: genera una imagen ejecutable 
+
+despliegue: repositorio
+
+- oc new-app python:3.5~https://github.com/apasofttraining/blog --name blog-desde-git (imageBuilder)(repositorio)
+- oc expose svc blog-desde-git
+- oc get bc (build config)
+- oc get build
+
+despliegue: Dockerfile
+
+- permite modificar e instalar lo que se quiera cosa que con los otros es fija.
+- oc new-app --name blog-con-dockerfile --strategy=docker https://github.com/apasofttraining/blog (para que use el dockerfile)
+
+Application grouping: permite relacionar diferentes aplicaciones.
+
+- mediante labels 
+- en la consola web se hace en actions, applicationsGruops
+- crea anotaciones para hacer relaciones visuales en la web
+
+
+
+
+

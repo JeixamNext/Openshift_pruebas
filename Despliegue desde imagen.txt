@@ -1,0 +1,15 @@
+- desde una imagen dockerHub o interna de la organizacion
+- oc new-app proyectohub/app-ejemplo (apasoft/blog) (despliege automatizado)(ejemplo con python contruido con un builder)
+- imageStream: un objeto que contiene enlaces de las diferentes versiones de una imagen. repositorio de imagenes asociada a un tipo de imagen (blog en este caso)(se actualiza si cambia el string de imagenes)
+- deploymentConfig: objeto openshift similar a deploy  (sustituido en la versión 4.5 de Openshift por Deployment a secas de kubernetes)
+################################################################################################################################################################################################################################################################
+
+- Para exponer fuera del cluster se necesita Route con svc(service) solo lo hara dentro del cluster
+- oc expose svc blog (crea el route)(se puede acceder desde el nombre que crea)
+
+################################################################################################################################################################################################################################################################
+- oc get is (imagestring)
+- oc get dc (deploymentConfig)
+- oc get rs/rc (deploymentConfig usa replication controler en vez de replica set de kubernetes habitual)
+- oc expose svc blog (crea el route)(se puede acceder desde el nombre que crea)
+- oc delete all -o name -l app=blog

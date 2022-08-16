@@ -1,0 +1,13 @@
+- objeto global
+- contenedor logico: algo asi como un namespace de kubernetes pero con mas objetos de tipo openshift
+
+crear un proyecto: 
+
+- logarse: oc login -u kubeadmin -p ..... (web copy login command)
+- oc new-project prueba1
+- oc describe project prueba1
+- oc apply -f proyecto.yaml (como en kubernetes)
+- oc delete project prueba1
+- oc create namespace estoharaunproyecto (crea un proyecto)
+- oc get ns (namespace) 
+
