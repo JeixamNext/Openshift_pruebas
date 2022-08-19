@@ -1,9 +1,56 @@
 ImageStream: IS
 
-IS o image Stream son imagenes docker o de repositorio git 
+IS o image Stream contiene imagenes docker o de repositorio git mediante una biblioteca de tags 
 
 - segun sea de codigo fuente, manual o de docker  
 (mas info en notas sobre despligue)
 
+ImageStream: biblioteca de etiquetas que apunta a las imagenes reales
 
+herramienta para simplificar el despligue de contenedores 
+
+Crear una IS
+
+- oc new-app wordpress --name=wordP (pueden ser imagenes internas o externas)
+- oc get images | grep wordpres
+- oc get is 
+- oc get is wordP -o yaml
+- oc import-image cassandra:latest --from="docker.io/cassandra:latest" --confirm
+
+crear is interna 
+
+- oc import-image mariadb:10.2 --confirm
+
+etiquetar is:
+
+- oc import-image odoo:13 --confirm
+- oc tag odoo:13 odoo:latest
+- oc tag dockero.io/odoo:12 odoo:12 (imagen externa)
+- oc describe is odoo
+- oc tag odoo:12 odoo:prod
+- oc tag odoo:13 odoo:test
+
+crear IS con yaml:
+
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: mi-web
+spec:
+  tags:
+  - name: "1.0"
+    from:
+      kind: DockerImage
+      name: apasoft/web
+
+
+- oc apply -f is.yaml
+- oc new-app mi-web:1.0 --name=miweb
+- oc get is
+ 
+imagen pull:
+
+- always
+- if not present
+- never
 

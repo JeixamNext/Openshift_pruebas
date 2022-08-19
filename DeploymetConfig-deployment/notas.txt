@@ -1,0 +1,15 @@
+deploymentConfig: propio de openshift, usa replication controller (replicaset)
+
+fichero de configuracion de un deploymentConfig
+
+- api version
+- kind
+- metadata
+- spec
+
+- oc apply -f deplyconfig.yaml
+
+- oc new-app php-https://github.... (crea todos los componentes)(basado en codigo fuente)
+
+- oc roolout (gestion deployment Config)(versiones de deploy)
+-  

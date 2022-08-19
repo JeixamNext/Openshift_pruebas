@@ -1,0 +1,42 @@
+buildconfig: constructor
+build: ejecuciones
+
+#########################################################################################################
+oc new-app es siempr necesario para crear pod/deploy/ect en este tipo de despligue
+##########################################################################################################
+
+buildconfig: source-to-image
+
+- source: imagenes
+- docker
+- pipeline; jenkins
+- custom
+- git 
+- docker
+- binary
+- input secret
+
+- oc get bc 
+- oc get bc cosa -o yam > bc.yaml (crea el fichero)
+
+crear un buildconfig:
+
+- new-build https://github.com/nodejs.git (solo crea el build, luego necesitaria el new-app)
+- oc start-build node2 
+- oc cancel-build node2-3 
+- oc delete-build node2 
+- oc apply -f bc-Dockerfile.yaml (desde un yaml usando Dockerfile)
+	-- oc create imagestream docker-input
+	-- oc start-buld docker-input
+
+Triggers: componente que hace que se dispare otro componente
+
+- webhook: se activan cuando hay un cambio y disparan un nuevo build
+- imageChange: cuando cambia una imagen
+- configChange: cuando cambia algo en la configuracion 
+
+
+
+
+
+

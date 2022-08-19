@@ -1,0 +1,4 @@
+- oc apply -f bc-python.yaml
+- oc apply -f is.yaml
+- oc create imagestream pythonapp
+- new-app pythonapp

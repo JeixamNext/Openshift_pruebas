@@ -1,0 +1,12 @@
+desde un fihero local en este caso la fuente es un php , el buildconfig es de git
+
+- oc apply -f bc-binary.yaml
+- oc apply -f is.yaml
+- oc new-app binary --name=binary (el nombre de la imagenBuild quese acaba de crear)
+- oc start-build binary --from-dir fuente (que lo haga desde la carpeta fuente)
+
+
+
+
+
+
