@@ -7,9 +7,39 @@ fichero de configuracion de un deploymentConfig
 - metadata
 - spec
 
-- oc apply -f deplyconfig.yaml
+- oc apply -f deployconfig.yaml
 
-- oc new-app php-https://github.... (crea todos los componentes)(basado en codigo fuente)
+- oc new-app php-https://github.... (crea todos los componentes:is,build,dc,service de php)(basado en codigo fuente de un git que contiene un ejemplo php)
+
+uso de roolout
 
 - oc roolout (gestion deployment Config)(versiones de deploy)
--  
+- oc roolout latest dc/php1; relanzar un dc basandose en latest 
+- oc roolout status php1
+- oc roolout history dc/php1
+- oc roolout history dc/php1 --revision:2 (info de esa version)
+
+uso de Rollback
+
+- oc start-build bc/php1 (desplegar otra version)
+- oc roolout history dc/php1
+- oc roolout undo dc/php1 --to-revision=2 (volver a la version 2)
+
+estrategia de despliegue: https://docs.okd.io/3.11/dev_guide/deployments/deployment_strategies.html
+
+strategy:
+  type: Rolling     #/recreate/custom
+  rollingParams:
+    updatePeriodSeconds: 1 
+    intervalSeconds: 1 
+    timeoutSeconds: 120 
+    maxSurge: "20%" 
+    maxUnavailable: "10%" 
+    pre: {} 
+    post: {}
+
+triggers: actualiza si hay cambios en la configuracion  
+
+- configchange: actualiza y realiza un nuevo deploy si se cambia algo en la configuracion
+
+

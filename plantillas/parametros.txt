@@ -1,0 +1,3 @@
+REDIS_PASSWORD=aecret:x
+SERVIDOR=server4_redis
+NOMBRE_CONTENEDOR=contenedor4

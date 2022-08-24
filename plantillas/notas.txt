@@ -1,0 +1,60 @@
+- https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html
+
+Una plantilla es una serie de conjuntos que se pueden 
+parametrizar y crear un conjunto de objetos. 
+Las plantillas pueden crear cualquier objeto que tenga 
+permiso para crear, como servicios, compilar cnofiguration e 
+implementar configuración. Una plantilla generalmente define 
+etiquetas para los objetos comunes en la plantilla.
+
+en vez de un bloque spec, la plantilla contiene un bloque denominado object.
+
+- contiene una lista de los objetos que deben generarse al usar la plantilla (pod,secret,deploy,ect)
+- permite el uso de variables 
+- parameters: define las variables 
+- usa expresiones regulares (https://www.sistrix.es/tutoriales/como-usar-expresiones-regulares/?utm_source=adwords&utm_medium=search&utm_campaign=dyn&gclid=EAIaIQobChMIw-jopYff-QIVg-hRCh0oyAxBEAAYASAAEgKtkPD_BwE) 
+
+crear una plantilla:
+
+- oc apply -f redis-plantilla
+- oc get templates
+- https://rawgit.com/openshift/openshift-logos-icon/master/demo.html
+
+trabajar con plantillas:
+
+- oc process redis-plantilla: expone los objetos que se generaran. devuelve un json con los objetos que se crearian 
+- oc process redis-plantilla -o yaml: en modo yaml
+- oc process redis-plantilla | oc apply -f - (genera el apply con los datos procesados de la plantilla json (el - hace que reciba esos datos))
+- oc process redis-plantilla > pod.yaml (crea un yaml con los datos del objeto pod)
+
+pasar parametros a una plantilla:
+
+- oc process redis-plantilla -p SERVIDOR=RedisServidor2 | oc apply -f -
+- oc process redis-plantilla -p SERVIDOR=RedisServidor3 -p NOMBRE_CONTENEDOR=cont1 | oc apply -f -
+- oc process redis-plantilla -p SERVIDOR=RedisServidor3 -p NOMBRE_CONTENEDOR=cont1 > pod.yaml
+- oc process redis-plantilla --param-file=parametros.txt
+
+
+contruccion de una app tipo php con plantilla:
+
+- oc apply -f plantilla-build-is.yaml
+- oc new-app aplicaccion --name=app1
+- oc expose svc app1
+
+
+seleccionar plantillas de openshift:
+
+- oc get templates -n oponshift (las que estan en el namespace openshift)
+- oc get templates -n oponshift | grep jdk 
+- oc new-app --templates=openjdk-web-basic-s2i --name=appli-java-basic
+
+Crear una plantilla desde una ya existente: 
+- oc get templates openjdk-web-basic-s2i -o yaml -n openshift > jdk.yaml
+(modificar y eliminar lo necesario)
+
+Crear plantillas desde objetos existentes:
+- oc get bc,is,dc,service,route -o yaml >plantilla_web.yaml
+(modificar lo necesario)
+
+
+

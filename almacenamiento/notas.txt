@@ -1,0 +1,19 @@
+- docker:asigna:volumen
+- openshift:plugin(csi):Persistentvolumen (pv,pvc,sc)
+
+pv: esta asignado a un volumen (volumen fisico)
+pvc: reclama un pv
+
+- oc get pv
+- oc get pvc
+- oc apply -f pv.yaml
+- oc apply -f pvclaim.yaml
+
+cada pvc esta asignado a su proyecto 
+
+Almacenamiento dinamico: StorageClass
+
+- interaciona entre el pv y el pvc 
+- selecciona el mejor 
+- provisioner: selecciona provedores de almacenamiento (plugin)(aws,azure,ect)
+# https://docs.openshift.com/container-platform/4.8/storage/dynamic-provisioning.html
